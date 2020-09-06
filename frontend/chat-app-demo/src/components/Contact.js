@@ -8,7 +8,13 @@ import UserItem from './UserItem';
 class Contact extends React.Component {
     
     componentDidMount() {
-        Api.get('/chat/users')
+        debugger;
+        console.log(JSON.parse(localStorage.getItem('User')).Token);
+        Api.get('/chat/users',{
+            headers: {
+                'Authorization': `Bearer ${JSON.parse(localStorage.getItem('User')).Token}`
+              }
+        })
             .then(res => {
                 if (res.data.length > 0) {
                     this.props.dispatch(fetchUser(res.data));

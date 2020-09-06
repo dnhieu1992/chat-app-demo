@@ -1,8 +1,8 @@
 
-export const addMessage = (message)=>{
+export const addMessage = (msg)=>{
     return {
         type: 'ADD_MESSAGE',
-        payload: { message: message }
+        payload: { messageItem: msg }
     }
 }
 

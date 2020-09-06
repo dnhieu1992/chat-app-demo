@@ -10,7 +10,12 @@ const messageReducer = (state = messageState, action) => {
                 messages: action.payload.messages
             });
         case "ADD_MESSAGE":
-            return state.messages.push(action.payload.messageItem);
+            return Object.assign({}, state, {
+                messages: [
+                    ...state.messages,
+                    action.payload.messageItem
+                ]
+            });
         default:
             return state;
     }

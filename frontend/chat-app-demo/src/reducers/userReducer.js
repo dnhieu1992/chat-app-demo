@@ -7,7 +7,7 @@ const userReducer = (state = userState, action) => {
             users: action.payload.users
         })
     }
-    return userState
+    return state
 }
 
 export default userReducer;

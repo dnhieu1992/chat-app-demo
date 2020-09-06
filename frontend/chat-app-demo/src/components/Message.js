@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 class Message extends React.Component {
 
     render() {
+        console.log(this.props.messages);
         if (this.props.messages.length > 0) {
             const renderList = this.props.messages.map((messageItem) => {
                 if (messageItem.type === 'sent') {
@@ -35,6 +36,7 @@ class Message extends React.Component {
     }
 }
 const mapStateToProps = state => {
+    console.log(state.messageReducer.messages);
     return { messages: state.messageReducer.messages }
 }
 
