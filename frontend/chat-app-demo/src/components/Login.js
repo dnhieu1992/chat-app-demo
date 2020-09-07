@@ -1,6 +1,7 @@
 import React from 'react';
 import '../login-style.css';
 import Api from '../service/baseApi';
+import authenticationApi from '../service/loginApi';
 
 class Login extends React.Component {
     constructor() {
@@ -14,16 +15,22 @@ class Login extends React.Component {
     handleLogin(event) {
         event.preventDefault();
         console.log("button login clicked.")
-        Api.post(`/auth/login`, null, {
-            params: {
-                username: this.state.username,
-                password: this.state.password
-            }
+        // Api.post(`/auth/login`, null, {
+        //     params: {
+        //         username: this.state.username,
+        //         password: this.state.password
+        //     }
+        // })
+        //     .then(response => {
+        //         console.log(response);
+        //         localStorage.setItem('User', JSON.stringify(response.data));
+        //     })
+        //     .catch(err => console.warn(err));
+        authenticationApi({ username: this.state.username, password: this.state.password }).then(response => {
+            debugger;
+            console.log(response);
+            localStorage.setItem('User', JSON.stringify(response));
         })
-            .then(response => {
-                console.log(response);
-                localStorage.setItem('User',JSON.stringify(response.data));
-            })
             .catch(err => console.warn(err));
     }
     handleUsernameChange(event) {

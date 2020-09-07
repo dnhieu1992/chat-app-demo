@@ -1,10 +1,10 @@
 ﻿using ChatApp.WebApi.Services;
 using ChatApp.WebApi.Services.Authentication;
+using ChatApp.WebApi.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ChatApp.WebApi.Controllers
@@ -30,14 +30,14 @@ namespace ChatApp.WebApi.Controllers
         }
         #endregion
         #region Methods
-        [HttpGet("login")]
-        public virtual async Task<IActionResult> LoginAsync(string username, string password)
+        [HttpPost("login")]
+        public virtual async Task<IActionResult> LoginAsync(UserRequest user)
         {
-            var result = await _authenticationService.LoginAsync(username, password);
+            var result = await _authenticationService.LoginAsync(user.Username, user.Password);
             if (result != null)
             {
                 result.Token = _jwtService.GenerateJwtToken(_configuration, result);
-                return Ok(JsonConvert.SerializeObject(result));
+                return Ok(result);
             }
             return Unauthorized();
         }
