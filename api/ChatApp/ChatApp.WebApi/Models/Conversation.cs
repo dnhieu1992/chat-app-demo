@@ -7,6 +7,6 @@ namespace ChatApp.WebApi.Models
     {
         public string Title { get; set; }
         public virtual ICollection<Messages> Messages { get; set; }
-        public virtual ICollection<UserConversation> UserConversations { get; set; }
+        public virtual ICollection<Participant> Participants { get; set; }
     }
 }

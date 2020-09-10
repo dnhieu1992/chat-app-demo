@@ -9,8 +9,6 @@ namespace ChatApp.WebApi.ViewModels
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
-        public string LatestMessage { get; set; }
-        public string Contact { get; set; }
-        public Guid ContactId { get; set; }
+        public List<Guid> ParticipantIds { get; set; }
     }
 }

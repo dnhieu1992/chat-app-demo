@@ -43,7 +43,7 @@ namespace ChatApp.WebApi
             services.AddTransient<IChatService, ChatService>();
             services.AddTransient<IMessageRepository, MessageRepository>();
             services.AddTransient<IConversationRepository, ConversationRepostitory>();
-            services.AddTransient<IUserConversationRepository, UserConversationRepository>();
+            services.AddTransient<IParticipantRepository, ParticipantRepository>();
             services.AddTransient<Services.Authentication.IAuthenticationService, Services.Authentication.AuthenticationService>();
             services.AddTransient<IConversationService, ConversationService>();
             services.AddTransient<JwtService, JwtService>();

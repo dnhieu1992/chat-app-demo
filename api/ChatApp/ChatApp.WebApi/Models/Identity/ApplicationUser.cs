@@ -1,5 +1,6 @@
 ﻿using ChatApp.WebApi.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using System;
 using System.Collections.Generic;
 
@@ -12,6 +13,7 @@ namespace ChatApp.WepApi.Models.Identity
         public string ProfilePicture { get; set; }
         public DateTime? Birthday { get; set; }
         public string Address { get; set; }
-        public virtual ICollection<UserConversation> UserConversations { get; set; }
+        public virtual ICollection<Messages> Messages { get; set; }
+        public virtual ICollection<Participant> Participants { get; set; }
     }
 }
