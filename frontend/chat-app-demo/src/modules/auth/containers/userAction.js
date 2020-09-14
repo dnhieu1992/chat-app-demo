@@ -1,6 +1,3 @@
-import React from 'react';
-
-
 const fetchUser = (users) => {
     return {
         type: 'FETCH_USER',
@@ -8,11 +5,11 @@ const fetchUser = (users) => {
     }
 }
 
-const initUser = (user) => {
+const updateCurrentUser = (user) => {
     return {
-        type: 'INIT_USER',
+        type: 'UPDATE_CURRENT_USER',
         payload: { user: user }
     }
 }
-export {fetchUser, initUser}
+export {fetchUser, updateCurrentUser}
 

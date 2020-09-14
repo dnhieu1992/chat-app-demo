@@ -1,8 +1,9 @@
 import React from 'react';
-import '../login-style.css';
-import Api from '../service/baseApi';
-import authenticationApi from '../service/loginApi';
-import {initUser} from '../actions/userAction';
+import './login-style.css';
+import authenticationApi from '../../../../apis/auth/loginApi';
+import { updateCurrentUser } from '../../containers/userAction';
+import Api from '../../../../apis/baseApi';
+import {connect} from 'react-redux';
 
 
 import { Link, Redirect } from 'react-router-dom';
@@ -18,22 +19,17 @@ class Login extends React.Component {
 
     handleLogin(event) {
         event.preventDefault();
-        // Api.post(`/auth/login`, null, {
-        //     params: {
-        //         username: this.state.username,
-        //         password: this.state.password
-        //     }
-        // })
-        //     .then(response => {
-        //         console.log(response);
-        //         localStorage.setItem('User', JSON.stringify(response.data));
-        //     })
-        //     .catch(err => console.warn(err));
         authenticationApi({ username: this.state.username, password: this.state.password }).then(response => {
             console.log(response);
-            initUser(response)
+            this.props.dispatch(updateCurrentUser(response));
+            updateCurrentUser(response)
             localStorage.setItem('User', JSON.stringify(response));
-            this.setState({redirect:true})
+            Api.interceptors.request.use(function (config) {
+                config.headers.Authorization = `Bearer ${response.token}`;
+                return config;
+            });
+            this.setState({ redirect: true });
+
         })
             .catch(err => console.warn(err));
     }
@@ -80,5 +76,10 @@ class Login extends React.Component {
         );
     }
 }
+const mapStateToDispatch = dispatch=>{
+    return {
+        dispatch
+    }
+}
 
-export default Login;
+export default connect(mapStateToDispatch)(Login);

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../assets/register-style.css';
+import './register-style.css';
 
 import { Link } from 'react-router-dom';
 

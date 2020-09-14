@@ -28,27 +28,27 @@ namespace ChatApp.WebApi.Infrastructure.UnitOfWork
         }
         public async Task<int> SaveChangeAsync()
         {
-            foreach (var entry in _dbContext.ChangeTracker.Entries())
-            {
-               // ClaimsPrincipal principal = new ClaimsPrincipal();
-                var currentUser = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-                if (currentUser != null)
-                {
-                    switch (entry.State)
-                    {
-                        case EntityState.Added:
-                            ((AuditEntity)entry.Entity).InsertedAt = DateTime.UtcNow;
-                            ((AuditEntity)entry.Entity).InsertedBy = Guid.Parse(currentUser.Value);
-                            ((AuditEntity)entry.Entity).LastUpdatedDate = DateTime.UtcNow;
-                            ((AuditEntity)entry.Entity).LastUpdatedBy = Guid.Parse(currentUser.Value);
-                            break;
-                        case EntityState.Modified:
-                            ((AuditEntity)entry.Entity).LastUpdatedDate = DateTime.UtcNow;
-                            ((AuditEntity)entry.Entity).LastUpdatedBy = Guid.Parse(currentUser.Value);
-                            break;
-                    }
-                }
-            }
+            //foreach (var entry in _dbContext.ChangeTracker.Entries())
+            //{
+            //   // ClaimsPrincipal principal = new ClaimsPrincipal();
+            //    var currentUser = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+            //    if (currentUser != null)
+            //    {
+            //        switch (entry.State)
+            //        {
+            //            case EntityState.Added:
+            //                ((AuditEntity)entry.Entity).InsertedAt = DateTime.UtcNow;
+            //                ((AuditEntity)entry.Entity).InsertedBy = Guid.Parse(currentUser.Value);
+            //                ((AuditEntity)entry.Entity).LastUpdatedDate = DateTime.UtcNow;
+            //                ((AuditEntity)entry.Entity).LastUpdatedBy = Guid.Parse(currentUser.Value);
+            //                break;
+            //            case EntityState.Modified:
+            //                ((AuditEntity)entry.Entity).LastUpdatedDate = DateTime.UtcNow;
+            //                ((AuditEntity)entry.Entity).LastUpdatedBy = Guid.Parse(currentUser.Value);
+            //                break;
+            //        }
+            //    }
+            //}
             return await _dbContext.SaveChangesAsync();
         }
 

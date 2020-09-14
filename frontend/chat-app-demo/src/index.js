@@ -6,12 +6,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import $ from 'jquery';
 import 'bootstrap/dist/js/bootstrap.bundle';
 
-import App from './components/App';
+import ChatApp from './modules/chatapp/pages/ChatApp';
 
 import { Provider } from 'react-redux';
 import store from './store';
-import Login from './components/Login';
-import Register from './components/Register';
+import Login from './modules/auth/components/login/Login';
+import Register from './modules/auth/components/register/Register';
 window.store = store;
 
 ReactDom.render(
@@ -19,7 +19,7 @@ ReactDom.render(
         <BrowserRouter>
             <div>
                 <Route exact path="/" component={Login} />
-                <Route path="/home" component={App} />
+                <Route path="/home" component={ChatApp} />
                 <Route path="/register" component={Register} />
             </div>
         </BrowserRouter>

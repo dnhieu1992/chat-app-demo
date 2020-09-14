@@ -1,10 +1,10 @@
 using ChatApp.WebApi.Hubs;
 using ChatApp.WebApi.Infrastructure;
 using ChatApp.WebApi.Infrastructure.Repositories;
+using ChatApp.WebApi.Infrastructure.UnitOfWork;
 using ChatApp.WebApi.Services;
 using ChatApp.WebApi.Services.Conversation;
 using ChatApp.WepApi.Models.Identity;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -47,6 +47,9 @@ namespace ChatApp.WebApi
             services.AddTransient<Services.Authentication.IAuthenticationService, Services.Authentication.AuthenticationService>();
             services.AddTransient<IConversationService, ConversationService>();
             services.AddTransient<JwtService, JwtService>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<ChatApp.WebApi.Services.UserManagement.IUserService, ChatApp.WebApi.Services.UserManagement.UserService>();
+            services.AddTransient<IMessageService, MessageService>();
 
             services.AddAuthentication(x =>
             {

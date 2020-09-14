@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace ChatApp.WebApi.Controllers
 {
-    [Authorize]
+   // [Authorize]
     [Route("api/chat")]
     [ApiController]
     

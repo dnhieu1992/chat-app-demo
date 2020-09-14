@@ -26,7 +26,12 @@ namespace ChatApp.WebApi.Services.Authentication
                 return new UserViewModel()
                 {
                     Username = user.UserName,
-                    Email = user.Email
+                    Email = user.Email,
+                    Id=user.Id,
+                    FirstName=user.FirstName,
+                    LastName=user.LastName,
+                    Avatar=user.AvatarUrl
+                    
                 };
             }
             return null;

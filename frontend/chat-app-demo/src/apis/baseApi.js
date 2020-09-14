@@ -1,11 +1,18 @@
 import axios from 'axios';
 
-
+const getToken = () => {
+  debugger;
+  let user = JSON.parse(localStorage.getItem('User'));
+  if (user) {
+    return user.token;
+  }
+  return '';
+}
 export default axios.create({
-  
+
   baseURL: `https://localhost:44386/api`,
   headers: {
-    'Authorization': `Bearer ${JSON.parse(localStorage.getItem('User')).token}`
+    'Authorization': `Bearer ${getToken()}`
   }
   // params: {
   //   part: 'snippet',

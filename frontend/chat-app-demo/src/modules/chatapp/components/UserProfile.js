@@ -1,12 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 class UserProfile extends React.Component {
     render() {
         return (
             <div id="profile">
                 <div className="wrap">
-                    <img id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" className="online" alt="" />
-                    <p>Mike Ross</p>
+                    <img id="profile-img" src={this.props.currentUser?.avatar} className="online" alt="" />
+                    <p>{this.props.currentUser?.displayName}</p>
                     <i className="fa fa-chevron-down expand-button" aria-hidden="true"></i>
                     <div id="status-options">
                         <ul>
@@ -29,4 +30,9 @@ class UserProfile extends React.Component {
         )
     }
 }
-export default UserProfile;
+const mapStateToProp = state => {
+    return {
+        currentUser: state.userReducer.currentUser
+    }
+}
+export default connect(mapStateToProp)(UserProfile);
