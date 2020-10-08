@@ -1,6 +1,6 @@
 import React from 'react';
 import './login-style.css';
-import authenticationApi from '../../../../apis/auth/loginApi';
+import {authenticationApi} from '../../../../apis/auth/loginApi';
 import { updateCurrentUser } from '../../containers/userAction';
 import Api from '../../../../apis/baseApi';
 import {connect} from 'react-redux';

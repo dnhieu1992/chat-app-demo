@@ -4,7 +4,7 @@ using ChatApp.WebApi.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
+using System;
 using System.Threading.Tasks;
 
 namespace ChatApp.WebApi.Controllers
@@ -41,6 +41,26 @@ namespace ChatApp.WebApi.Controllers
             }
             return Unauthorized();
         }
+        [HttpPost("register")]
+        public virtual async Task<IActionResult> RegisterAsync(UserRequest request)
+        {
+            try
+            {
+                var result = await _authenticationService.RegisterAsync(request);
+                if (result != null)
+                {
+                    result.Token = _jwtService.GenerateJwtToken(_configuration, result);
+                    return Ok(result);
+                }
+                return StatusCode(500);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         #endregion
     }
 }

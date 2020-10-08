@@ -1,25 +1,30 @@
 import React from 'react';
 import './register-style.css';
 
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Input from '../../../../helpers/components/Input';
+import { registerApi } from '../../../../apis/auth/loginApi.js';
+import { connect } from 'react-redux';
+import { updateCurrentUser } from '../../containers/userAction';
+import Api from '../../../../apis/baseApi';
 
 
 class Register extends React.Component {
     constructor() {
         super();
-        this.state = { user: { username: '', email: '', password: '' }, errorMessage: {} }
+        this.state = { user: { username: '', email: '', password: '' }, errorMessage: {}, redirect: false }
     }
     onHandleChange(fieldName, e) {
         debugger;
+        let errorMessage = this.state.errorMessage;
         if (!e.target.value) {
-            let errorMessage = this.state.errorMessage;
             errorMessage[fieldName] = "Please fill out this field.";
             this.setState({ errorMessage })
         } else {
             let user = this.state.user;
             user[fieldName] = e.target.value;
-            this.setState({ user })
+            errorMessage[fieldName]="";
+            this.setState({ user,errorMessage })
         }
     }
 
@@ -48,10 +53,25 @@ class Register extends React.Component {
         if (!isValid) {
             this.setState({ errorMessage });
             return;
+        } else {
+            return registerApi(users).then(response => {
+                this.props.dispatch(updateCurrentUser(response));
+                updateCurrentUser(response)
+                localStorage.setItem('User', JSON.stringify(response));
+                Api.interceptors.request.use(function (config) {
+                    config.headers.Authorization = `Bearer ${response.token}`;
+                    return config;
+                });
+                this.setState({ redirect: true });
+            }).catch(() => {
+                console.log("error");
+            })
         }
-        
     }
     render() {
+        if (this.state.redirect) {
+            return <Redirect to='/home' />;
+        }
         return (
             <div className="card bg-light">
                 <article className="card-body mx-auto" style={{ width: '450px' }}>
@@ -100,4 +120,10 @@ class Register extends React.Component {
         )
     }
 }
-export default Register;
+const mapStateToDispatch = dispatch => {
+    return {
+        dispatch
+    }
+}
+
+export default connect(mapStateToDispatch)(Register);
